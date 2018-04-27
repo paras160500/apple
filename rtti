@@ -1,0 +1,80 @@
+#include<iostream>
+#include<typeinfo>
+using namespace std;
+
+class mammal
+{
+public:
+  virtual bool lay_lags ()
+  {
+    return false;
+  }
+};
+
+class Cat:public mammal
+{
+public:
+
+};
+
+class Platypus:public mammal
+{
+public:
+  bool lay_lags ()
+  {
+    return true;
+  }
+};
+
+class Dog:public mammal
+{
+public:
+
+};
+
+mammal *
+factory ()
+{
+  switch (rand () % 3)
+    {
+    case 0:
+      return new Dog;
+      break;
+    case 1:
+      return new Cat;
+      break;
+    case 2:
+      return new Platypus;
+      break;
+    }
+  return 0;
+}
+
+int
+main ()
+{
+  mammal *ptr;
+  int i;
+  int c = 0, d = 0, p = 0;
+
+  for (i = 0; i < 10; i++)
+    {
+      ptr = factory ();
+
+      std::cout << "Object is " << typeid (*ptr).name () << '\n';
+
+      if (typeid (*ptr) == typeid (Dog))
+	d++;
+      if (typeid (*ptr) == typeid (Cat))
+	c++;
+      if (typeid (*ptr) == typeid (Platypus))
+	p++;
+    }
+
+  std::cout << endl << '\n';
+  std::cout << "Animal Generated " << '\n';
+  std::cout << "Dogs : " << d << '\n';
+  std::cout << "Cats : " << c << '\n';
+  std::cout << "Platypus : " << p << '\n';
+  return 0;
+}
